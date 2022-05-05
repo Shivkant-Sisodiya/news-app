@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/app_theme/app_theme_bloc.dart';
-import 'package:flutter_news_app/settings/app_themes.dart';
+import 'package:flutter_news_app/blocs/app_theme/Repository/app_themes.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);

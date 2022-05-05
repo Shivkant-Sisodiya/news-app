@@ -32,11 +32,11 @@ class AppScreen extends StatelessWidget {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home, color: Colors.black),
-              label: 'First',
+              label: 'Hot',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.all_inclusive, color: Colors.black),
-              label: 'Second',
+              label: 'New',
             ),
           ],
           onTap: (index) => context

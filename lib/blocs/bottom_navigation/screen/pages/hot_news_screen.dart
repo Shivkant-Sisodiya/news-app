@@ -1,4 +1,3 @@
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/newsbloc/news_bloc.dart';
@@ -6,12 +5,10 @@ import 'package:flutter_news_app/blocs/newsbloc/news_events.dart';
 import 'package:flutter_news_app/blocs/newsbloc/news_states.dart';
 import 'package:flutter_news_app/blocs/search/search_bloc.dart';
 import 'package:flutter_news_app/models/article_model.dart';
-import 'package:flutter_news_app/settings/like_button.dart';
-
-import 'package:flutter_news_app/views/details_news.dart';
-import 'package:flutter_news_app/views/location_screen.dart';
-import 'package:flutter_news_app/views/news_search.dart';
-import 'package:flutter_news_app/views/setting_screen.dart';
+import 'package:flutter_news_app/widgets/custom_list.dart';
+import 'package:flutter_news_app/blocs/geolocation/screen/location_screen.dart';
+import 'package:flutter_news_app/widgets/news_search.dart';
+import 'package:flutter_news_app/blocs/app_theme/screen/setting_screen.dart';
 
 class HotScreen extends StatefulWidget {
   @override
@@ -24,9 +21,6 @@ class _HotScreenState extends State<HotScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width;
-    var height = MediaQuery.of(context).size.height;
-
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -116,33 +110,6 @@ class _HotScreenState extends State<HotScreen> {
         ),
         body: Stack(
           children: [
-            // Container(
-            //   child: Column(
-            //     crossAxisAlignment: CrossAxisAlignment.start,
-            //     children: [
-            //       SizedBox(
-            //         height: height * 0.01,
-            //       ),
-            //       Container(
-            //         margin: EdgeInsets.only(left: width * 0.03),
-            //         child: Text(
-            //           "Bloc News".toUpperCase(),
-            //           style: TextStyle(
-            //               fontSize: 22, fontWeight: FontWeight.bold),
-            //         ),
-            //       ),
-            //       SizedBox(
-            //         height: height * 0.01,
-            //       ),
-            //       Container(
-            //         height: 1,
-            //         color: Colors.grey.withOpacity(0.7),
-            //         width: width,
-            //         margin: EdgeInsets.symmetric(horizontal: width * 0.05),
-            //       )
-            //     ],
-            //   ),
-            // ),
             Container(
               color: Colors.white,
               // margin: EdgeInsets.only(top: height * 0.08),
@@ -155,190 +122,11 @@ class _HotScreenState extends State<HotScreen> {
                   } else if (state is NewsLoadedState) {
                     List<ArticleModel> _articleList = [];
                     _articleList = state.articleList;
-                    return ListView.builder(
-                        itemCount: _articleList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // builder: (context) => LocationScreen(
-                                  //   articleList: _articleList,
-                                  // ),
-                                  builder: (context) => DetailNews(
-                                      key: Key('$index'),
-                                      articleModel: _articleList[index]),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 1,
-                                        color: Colors.grey,
-                                        offset: Offset(0, 2),
-                                        spreadRadius: 1)
-                                  ]),
-                              height: height * 0.15,
-                              margin: EdgeInsets.only(
-                                bottom: height * 0.01,
-                                top: height * 0.01,
-                                left: width * 0.02,
-                                right: width * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: width * 0.3,
-                                    height: height * 0.15,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          _articleList[index].thumbnail,
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: width * 0.03),
-                                  Container(
-                                    height: height * 0.15,
-                                    width: width * 0.55,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: height * 0.01),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          _articleList[index].title,
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        Text(
-                                          _articleList[index]
-                                              .created_utc
-                                              .toString(),
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        LikeButton(
-                                          key: Key('$index'),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
+                    return CustomList(articleList: state.articleList);
                   } else if (state is NewsFilterState) {
                     List<ArticleModel> _articleList = [];
                     _articleList = state.filterArticleList;
-                    return ListView.builder(
-                        itemCount: _articleList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // builder: (context) => LocationScreen(
-                                  //   articleList: _articleList,
-                                  // ),
-                                  builder: (context) => DetailNews(
-                                      key: Key('$index'),
-                                      articleModel: _articleList[index]),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 1,
-                                        color: Colors.grey,
-                                        offset: Offset(0, 2),
-                                        spreadRadius: 1)
-                                  ]),
-                              height: height * 0.15,
-                              margin: EdgeInsets.only(
-                                bottom: height * 0.01,
-                                top: height * 0.01,
-                                left: width * 0.02,
-                                right: width * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: width * 0.3,
-                                    height: height * 0.15,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          _articleList[index].thumbnail,
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: width * 0.03),
-                                  Container(
-                                    height: height * 0.15,
-                                    width: width * 0.55,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: height * 0.01),
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          _articleList[index].title,
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 3,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                        Text(
-                                          _articleList[index]
-                                              .created_utc
-                                              .toString(),
-                                          overflow: TextOverflow.clip,
-                                          maxLines: 1,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 14,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
+                    return CustomList(articleList: state.filterArticleList);
                   } else if (state is NewsErrorState) {
                     String error = state.errorMessage;
                     return Center(child: Text(error));

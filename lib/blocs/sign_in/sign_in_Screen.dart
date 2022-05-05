@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/blocs/bottom_navigation/screen/app_screen.dart';
-
+import 'package:flutter_news_app/settings/shared_pref.dart';
 import 'sign_in_bloc.dart';
-
-// import 'package:flutter_application_1/services/shared_pref.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -14,6 +12,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreen extends State<SignInScreen> {
+  final PrefService _prefService = PrefService();
   final _email = TextEditingController();
   final _password = TextEditingController();
   String email = '';
@@ -21,6 +20,16 @@ class _SignInScreen extends State<SignInScreen> {
 
   @override
   void initState() {
+    _prefService.readCache("_password").then((value) {
+      if (value != null) {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => AppScreen(),
+          ),
+        );
+      }
+    });
     super.initState();
   }
 
@@ -137,12 +146,16 @@ class _SignInScreen extends State<SignInScreen> {
                                         _email.text,
                                         _password.text,
                                       ));
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => AppScreen(),
-                                        ),
-                                      );
+                                      _prefService
+                                          .createCache(_password.text)
+                                          .then((value) {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => AppScreen(),
+                                          ),
+                                        );
+                                      });
                                     }
                                   },
                                   icon: Icon(Icons.arrow_forward),

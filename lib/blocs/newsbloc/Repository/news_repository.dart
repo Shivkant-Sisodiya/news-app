@@ -9,7 +9,6 @@ class NewsRepository {
     // ?limit=5
 
     var data = jsonDecode(response.body);
-
     List<ArticleModel> _articleModelList = [];
 
     if (response.statusCode == 200) {

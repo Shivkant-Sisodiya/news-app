@@ -1,8 +1,6 @@
-import 'package:favorite_button/favorite_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_news_app/blocs/bottom_navigation/screen/pages/hot_news_screen.dart';
 import 'package:flutter_news_app/models/article_model.dart';
-import 'package:flutter_news_app/settings/like_button.dart';
+import 'package:flutter_news_app/widgets/like_button.dart';
 
 class DetailNews extends StatefulWidget {
   final ArticleModel articleModel;

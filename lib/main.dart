@@ -5,8 +5,8 @@ import 'package:flutter_news_app/blocs/app_theme/app_theme_bloc.dart';
 
 import 'package:flutter_news_app/blocs/geolocation/geolocation_bloc.dart';
 import 'package:flutter_news_app/blocs/sign_in/sign_in_Screen.dart';
-import 'package:flutter_news_app/repositories/geolocation_repository.dart';
-import 'package:flutter_news_app/repositories/new_news_repository.dart';
+import 'package:flutter_news_app/blocs/geolocation/Repository/geolocation_repository.dart';
+import 'package:flutter_news_app/blocs/new_news_bloc/Repository/new_news_repository.dart';
 
 import 'blocs/bottom_navigation/bottom_navigation_bloc.dart';
 import 'blocs/new_news_bloc/new_news_bloc.dart';
@@ -14,7 +14,7 @@ import 'blocs/newsbloc/news_bloc.dart';
 import 'blocs/newsbloc/news_states.dart';
 import 'blocs/search/search_bloc.dart';
 import 'blocs/sign_in/sign_in_bloc.dart';
-import 'repositories/news_repository.dart';
+import 'blocs/newsbloc/Repository/news_repository.dart';
 
 void main() {
   runApp(MyApp());

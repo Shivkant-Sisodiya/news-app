@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_news_app/blocs/bottom_navigation/screen/pages/hot_news_screen.dart';
 import 'package:flutter_news_app/blocs/new_news_bloc/new_news_bloc.dart';
 import 'package:flutter_news_app/models/article_model.dart';
-import 'package:flutter_news_app/views/details_news.dart';
-import 'package:flutter_news_app/views/location_screen.dart';
-import 'package:flutter_news_app/views/setting_screen.dart';
+import 'package:flutter_news_app/widgets/details_news.dart';
+import 'package:flutter_news_app/blocs/geolocation/screen/location_screen.dart';
+import 'package:flutter_news_app/blocs/app_theme/screen/setting_screen.dart';
+import 'package:flutter_news_app/widgets/custom_list.dart';
 
 class NewScreen extends StatefulWidget {
   const NewScreen({Key? key}) : super(key: key);
@@ -105,82 +105,7 @@ class _NewScreenState extends State<NewScreen> {
                       child: CircularProgressIndicator(),
                     );
                   } else if (state is NewNewsLoadedState) {
-                    List<ArticleModel> _articleList = [];
-                    _articleList = state.articleList;
-                    return ListView.builder(
-                        itemCount: _articleList.length,
-                        itemBuilder: (context, index) {
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // builder: (context) => LocationScreen(
-                                  //   articleList: _articleList,
-                                  // ),
-                                  builder: (context) => DetailNews(
-                                    articleModel: _articleList[index],
-                                    key: Key('$index'),
-                                  ),
-                                ),
-                              );
-                            },
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        blurRadius: 1,
-                                        color: Colors.grey,
-                                        offset: Offset(0, 2),
-                                        spreadRadius: 1)
-                                  ]),
-                              height: height * 0.15,
-                              margin: EdgeInsets.only(
-                                bottom: height * 0.01,
-                                top: height * 0.01,
-                                left: width * 0.02,
-                                right: width * 0.02,
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    width: width * 0.3,
-                                    height: height * 0.15,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(10),
-                                        bottomLeft: Radius.circular(10),
-                                      ),
-                                      image: DecorationImage(
-                                        image: NetworkImage(
-                                          _articleList[index].thumbnail,
-                                        ),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(width: width * 0.03),
-                                  Container(
-                                    height: height * 0.15,
-                                    width: width * 0.55,
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: height * 0.01),
-                                    child: Text(
-                                      _articleList[index].title,
-                                      overflow: TextOverflow.clip,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        });
+                    return CustomList(articleList: state.articleList);
                   } else if (state is NewNewsErrorState) {
                     String error = state.errorMessage;
                     return Center(child: Text(error));

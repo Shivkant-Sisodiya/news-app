@@ -1,8 +1,7 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter_news_app/repositories/geolocation_repository.dart';
+import 'package:flutter_news_app/blocs/geolocation/Repository/geolocation_repository.dart';
 import 'package:geolocator/geolocator.dart';
 
 part 'geolocation_event.dart';
@@ -30,7 +29,6 @@ class GeolocationBloc extends Bloc<GeolocationEvent, GeolocationState> {
   Stream<GeolocationState> _mapLoadGeolocationToState() async* {
     _geolocationSubscription?.cancel();
     final Position position = await _geolocationRepository.getCurrentLocation();
-
     add(UpdateGeolocation(position: position));
   }
 

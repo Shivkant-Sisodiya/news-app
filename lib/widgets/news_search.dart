@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter_news_app/blocs/search/search_bloc.dart';
-import 'package:flutter_news_app/views/details_news.dart';
+import 'package:flutter_news_app/widgets/details_news.dart';
 
 class SearchNews extends SearchDelegate<List> {
   SearchBloc searchBloc;

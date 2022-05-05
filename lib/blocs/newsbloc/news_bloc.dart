@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_news_app/models/article_model.dart';
-import 'package:flutter_news_app/repositories/news_repository.dart';
+import 'package:flutter_news_app/blocs/newsbloc/Repository/news_repository.dart';
 import 'news_events.dart';
 import 'news_states.dart';
 
@@ -21,7 +20,6 @@ class NewsBloc extends Bloc<NewsEvents, NewsStates> {
     if (event is StartEvent) {
       try {
         yield NewsLoadingState();
-
         yield NewsLoadedState(articleList: _articleList);
       } catch (e) {
         yield NewsErrorState(errorMessage: e.toString());

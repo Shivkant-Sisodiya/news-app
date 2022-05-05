@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_news_app/models/article_model.dart';
-import 'package:flutter_news_app/repositories/new_news_repository.dart';
+import 'package:flutter_news_app/blocs/new_news_bloc/Repository/new_news_repository.dart';
 
 part 'new_news_event.dart';
 part 'new_news_state.dart';
